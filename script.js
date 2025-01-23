@@ -1,16 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
   const bookCards = document.querySelectorAll('.book-card'); // All book cards
+  const topics = document.querySelectorAll('.topic-card'); // All topic cards
   const popup = document.getElementById('book-popup'); // Popup container
   const popupTitle = document.getElementById('popup-book-title'); // Popup title
   const popupInput = document.getElementById('popup-username'); // Answer input field
   const popupButton = document.getElementById('popup-link'); // "Check Answer" button
   const closeBtn = document.querySelector('.close-btn'); // Close button for popup
+  const reportButton = document.getElementById('report-button'); // "Report Question" button
   const starSystem = document.getElementById('star-system'); // Star counter
   const userForm = document.getElementById('user-form'); // Email form
   const emailInput = document.getElementById('username'); // Email input
   const userMessage = document.getElementById('user-message'); // Message under the form
-  let correctAnswer = "95"; // Set the correct answer for the current problem
-  let problemID = "problem1"; // Example problem ID
+  let correctAnswer = ""; // Placeholder for the correct answer
+  let problemID = ""; // Placeholder for the problem ID
   let email = ""; // Initialize email
 
   // Handle email submission
@@ -35,7 +37,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Show popup on book card click
+  // Expand/collapse topics
+  topics.forEach(topic => {
+    const title = topic.querySelector('.topic-title'); // Get the title inside the topic
+    const content = topic.querySelector('.topic-content'); // Get the content to show/hide
+
+    title.addEventListener('click', () => {
+      // Toggle the "hidden" class to expand/collapse
+      content.classList.toggle('hidden');
+    });
+  });
+
+  // Show popup on book-card click
   bookCards.forEach(card => {
     card.addEventListener('click', (event) => {
       event.preventDefault(); // Prevent default link navigation
@@ -69,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (solvedProblems.includes(problemID)) {
       // Problem already solved
       popupInput.style.borderColor = 'orange'; // Highlight orange for warning
-      alert("You've already solved this problem and earned a star.");
     } else if (userAnswer === correctAnswer) {
       // Correct answer and problem not solved yet
       popupInput.style.borderColor = 'green'; // Highlight green
@@ -84,6 +96,22 @@ document.addEventListener('DOMContentLoaded', () => {
         popupInput.style.borderColor = ''; // Reset after a short delay
       }, 500);
     }
+  });
+
+  // Report Question Functionality
+  reportButton.addEventListener('click', () => {
+    if (!email) {
+      alert('Please log in with your email to report a question.');
+      return;
+    }
+    // Mock reporting logic
+    const reportMessage = `The question "${popupTitle.textContent}" has been reported. Thank you!`;
+    alert(reportMessage);
+
+    // Optionally, log the report to localStorage for tracking purposes
+    const reports = JSON.parse(localStorage.getItem('reportedQuestions')) || [];
+    reports.push({ email, question: popupTitle.textContent, timestamp: new Date().toISOString() });
+    localStorage.setItem('reportedQuestions', JSON.stringify(reports));
   });
 
   // Load saved data from localStorage when the page loads
