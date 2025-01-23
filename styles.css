@@ -193,34 +193,61 @@ main {
   transform: scale(1.05);
 }
 
-.book-cards {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+/* Topic Card Styling */
+.topic-card {
+  background-color: #fff;
+  color: #10b3ef;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
+.topic-card:hover {
+  transform: scale(1.02);
+}
+
+.topic-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.topic-content {
+  display: none; /* Start hidden */
+}
+
+.topic-content.hidden {
+  display: none; /* Hide when the class is present */
+}
+
+.topic-content:not(.hidden) {
+  display: block; /* Show when the class is absent */
+}
+
+/* Book Card Styling */
 .book-card {
-  background-color: #fff;
+  background-color: #eee;
   color: #10b3ef;
   text-decoration: none;
   padding: 5px 10px;
   border-radius: 5px;
   display: flex;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;   
   font-family: 'Sofia Sans Extra Condensed', sans-serif;
-  transition: transform 0.3s ease-in-out;
-  width: 100%;
-  margin-bottom: 10px;
-  cursor: pointer; /* Makes the mouse pointer a clicker */
+  transition: background 0.3s ease-in-out;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-.book-card b{ 
+.book-card b {
   font-family: 'Sofia Sans Extra Condensed', sans-serif;
   margin-right: 10px;
 }
 
 .book-card:hover {
-  transform: scale(1.05);
+  background: #ddd;
 }
 
 #join {
@@ -437,3 +464,15 @@ h3{
   font-weight: bold;
 }
 
+.popup-button.report-button {
+  background-color: white; /* Red button for reporting */
+  margin-top: 10px;
+  border: none;
+  color: #10b3ef;
+}
+
+.popup-button.report-button:hover {
+  background-color: #eee; /* Darker red on hover */
+  cursor: pointer;
+  border: none;
+}
